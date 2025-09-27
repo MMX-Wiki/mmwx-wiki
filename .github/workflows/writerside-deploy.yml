@@ -1,54 +1,84 @@
-# Name of the workflow
-name: Deploy Writerside Docs to GitHub Pages
+name: Build and Deploy Writerside Docs
 
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push events but only for the "main" branch
   push:
     branches: [ "main" ]
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+# Add these environment variables
+env:
+  INSTANCE: 'Writerside/hi' # CHANGE THIS to your instance
+  DOCKER_VERSION: '2025.04.8412' # Use the latest version from docs
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
 jobs:
-  # This job builds the Writerside documentation
+  # This is the updated 'build' job
   build:
-    name: Build Writerside Docs
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pages: write
+    outputs:
+      artifact: ${{ steps.define-ids.outputs.artifact }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Build with Writerside Action
-        uses: JetBrains/writerside-github-action@v1
         with:
-          args: build --source-dir . --output-dir ./artifacts/web
+          fetch-depth: 0
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: Define instance id and artifacts
+        id: define-ids
+        run: |
+          INSTANCE_PATH=${{ env.INSTANCE }}
+          INSTANCE_ID=${INSTANCE_PATH#*/}
+          INSTANCE_ID_UPPER=$(echo "$INSTANCE_ID" | tr '[:lower:]' '[:upper:]')
+          ARTIFACT="webHelp${INSTANCE_ID_UPPER}2-all.zip"
+          echo "artifact=$ARTIFACT" >> $GITHUB_OUTPUT
+
+      - name: Build docs using Writerside Docker builder
+        uses: JetBrains/writerside-github-action@v4
         with:
-          path: ./artifacts/web
-  # This job deploys the artifact to GitHub Pages
+          instance: ${{ env.INSTANCE }}
+          docker-version: ${{ env.DOCKER_VERSION }}
+
+      - name: Save artifact with build results
+        uses: actions/upload-artifact@v4
+        with:
+          name: docs
+          path: |
+            artifacts/${{ steps.define-ids.outputs.artifact }}
+            artifacts/report.json
+          retention-days: 7
+
+  # This is the updated 'deploy' job
   deploy:
-    name: Deploy to GitHub Pages
-    # Requires the 'build' job to have completed successfully
-    needs: build
-    runs-on: ubuntu-latest
-
-    # Grant GITHUB_TOKEN the permissions required to deploy to GitHub Pages
-    permissions:
-      pages: write      # to deploy to Pages
-      id-token: write   # to verify the deployment originates from an authentic source
-
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-
+    runs-on: ubuntu-latest
+    needs: build
     steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: docs
+
+      - name: Unzip artifact
+        run: unzip -O UTF-8 -qq ${{ needs.build.outputs.artifact }} -d .
+
+      - name: Setup GitHub Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

@@ -16,14 +16,17 @@ jobs:
   build:
     name: Build Writerside Docs
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Build with Writerside Docker
-          uses: docker://registry.jetbrains.team/p/writerside/builder/writerside-builder:2025.04.8412
-          with:
-            args: --source-dir . --output-dir ./artifacts/web
+        uses: docker://registry.jetbrains.team/p/writerside/builder/writerside-builder:2025.04.8412
+        with:
+          args: --source-dir . --output-dir ./artifacts/web
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

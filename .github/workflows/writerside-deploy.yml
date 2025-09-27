@@ -70,6 +70,7 @@ jobs:
         with:
           pattern: docs-*
           merge-multiple: true
+          path: '.'
 
       - name: Unzip all webhelp zips
         shell: bash

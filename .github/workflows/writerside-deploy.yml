@@ -23,10 +23,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Build with Writerside Docker
-        uses: docker://registry.jetbrains.team/p/writerside/builder/writerside-builder:2025.04.8412
+      - name: Build with Writerside Action
+        uses: JetBrains/writerside-github-action@v1
         with:
-          entrypoint: writerside-builder
           args: build --source-dir . --output-dir ./artifacts/web
 
       - name: Upload artifact

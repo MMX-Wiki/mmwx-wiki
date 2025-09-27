@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE build-groups SYSTEM "https://resources.jetbrains.com/writerside/1.0/build-groups.dtd">
+<build-groups
+        xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/build-groups.xsd"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <build-group name="all-docs">
+        <instance instance-id="hi" alias="Home" path="/hi"/>
+        <instance instance-id="eng" alias="Engineering" path="/engineering"/>
+        <instance instance-id="est" alias="Estimating" path="/estimating"/>
+        <instance instance-id="i" alias="Innergy" path="/innergy"/>
+        <instance instance-id="pm" alias="Project Management" path="/project-management"/>
+    </build-group>
+</build-groups>

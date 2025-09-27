@@ -24,7 +24,7 @@ jobs:
       # 2. Runs the Writerside Docker container to build the docs
       #    It mounts the current directory (.) into the container's /data directory
       - name: Build with Writerside Docker
-        uses: docker://registry.jetbrains.team/p/writerside/builder/writerside-builder:2024.1.2
+        uses: docker://registry.jetbrains.team/p/writerside/builder/writerside-builder:latest
         with:
           args: |
             build

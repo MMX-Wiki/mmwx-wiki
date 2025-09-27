@@ -149,7 +149,8 @@ jobs:
             find dir -type f \( -name "*.html" -o -name "*.js" -o -name "*.css" -o -name "*.json" \) -print0 | xargs -0 -I{} perl -0777 -i -pe 'BEGIN{ $base=$ENV{"BASE"} } s{\Q$base\E//}{$base}g' "{}"
 
             # 7) Ensure trailing slash for links pointing to instance root directories in any context so index.html is served
-            find dir -type f \( -name "*.html" -o -name "*.js" -o -name "*.json" \) -print0 | xargs -0 -I{} perl -0777 -i -pe 'BEGIN{ $base=$ENV{"BASE"} } s{(\Q$base\E(?:hi|engineering|estimating|innergy|project-management))(?!/)(?=["'""`\)\s#?])}{$1/}g' "{}"
+            # Avoid shell-quoting issues by not matching single quotes inside the Perl pattern
+            find dir -type f \( -name "*.html" -o -name "*.js" -o -name "*.json" \) -print0 | xargs -0 -I{} perl -0777 -i -pe 'BEGIN{ $base=$ENV{"BASE"} } s{(\Q$base\E(?:hi|engineering|estimating|innergy|project-management))(?!/)(?=(?:["\)`\s#?]|$))}{$1/}g' "{}"
           else
             echo "BASE is '/', skipping rewrite."
           fi

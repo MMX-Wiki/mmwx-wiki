@@ -133,6 +133,10 @@ jobs:
             # HTML and JS attribute values: href="/..., src="/..., content="/..."
             # Preserve the original path after the leading slash while prefixing BASE
             find dir -type f \( -name "*.html" -o -name "*.js" \) -print0 | xargs -0 -I{} perl -0777 -i -pe 'BEGIN{ $base=$ENV{"BASE"} } s{\b(href|src|content)="(/(?!/)[^"]*)"}{$1="$base$2"}g' "{}"
+            # Normalize accidental double slashes after the base prefix (e.g., /repo//engineering -> /repo/engineering)
+            find dir -type f \( -name "*.html" -o -name "*.js" -o -name "*.css" \) -print0 | xargs -0 -I{} perl -0777 -i -pe 'BEGIN{ $base=$ENV{"BASE"} } s{\Q$base\E//}{$base}g' "{}"
+            # Ensure trailing slash when linking to instance root directories so that index.html is served
+            find dir -type f \( -name "*.html" -o -name "*.js" \) -print0 | xargs -0 -I{} perl -0777 -i -pe 'BEGIN{ $base=$ENV{"BASE"} } s{\b(href|src)="(\Q$base\E(?:hi|engineering|estimating|innergy|project-management))(?!/)(?=["?#])}{$1="$2/"}g' "{}"
             # HTML <base href="/"> tag
             find dir -type f -name "*.html" -print0 | xargs -0 -I{} perl -0777 -i -pe 'BEGIN{ $base=$ENV{"BASE"} } s{<base\s+href="/(?!/)}{<base href="$base"}gi' "{}"
             # JS: absolute URLs inside strings like fetch("/api"), location.assign('/path'), etc.
@@ -142,6 +146,13 @@ jobs:
           else
             echo "BASE is '/', skipping rewrite."
           fi
+
+      - name: List site structure (debug)
+        shell: bash
+        run: |
+          echo "Listing top-level of dir/:"; ls -la dir || true
+          echo "Listing instance directories:"; for d in hi engineering estimating innergy project-management; do if [ -d "dir/$d" ]; then echo "== $d =="; ls -la "dir/$d" | sed 's/^/    /'; fi; done
+          echo "Index files found:"; find dir -maxdepth 2 -type f -name index.html -print | sed 's/^/  /'
 
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v4

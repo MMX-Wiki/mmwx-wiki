@@ -26,6 +26,7 @@ jobs:
       - name: Build with Writerside Docker
         uses: docker://registry.jetbrains.team/p/writerside/builder/writerside-builder:2025.04.8412
         with:
+          entrypoint: writerside-builder
           args: build --source-dir . --output-dir ./artifacts/web
 
       - name: Upload artifact

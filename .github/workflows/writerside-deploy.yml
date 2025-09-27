@@ -129,10 +129,11 @@ jobs:
           echo "Rewriting root-relative URLs to use base: $BASE"
           # Only rewrite if base is not just "/"
           if [ "$BASE" != "/" ]; then
+            export BASE
             # HTML and JS: href="/..., src="/..., content="/...
-            find dir -type f \( -name "*.html" -o -name "*.js" \) -print0 | xargs -0 -I{} perl -0777 -i -pe 's/\b(href|src|content)=\"\/(?!\/)/$1=\"'"$BASE"'/g' "{}"
+            find dir -type f \( -name "*.html" -o -name "*.js" \) -print0 | xargs -0 -I{} perl -0777 -i -pe 'BEGIN{ $base=$ENV{"BASE"} } s{\b(href|src|content)="/(?!/)}{$1="$base"}g' "{}"
             # CSS: url(/...)
-            find dir -type f -name "*.css" -print0 | xargs -0 -I{} perl -0777 -i -pe 's/url\(\s*\/(?!\/)/url('"$BASE"'/g' "{}"
+            find dir -type f -name "*.css" -print0 | xargs -0 -I{} perl -0777 -i -pe 'BEGIN{ $base=$ENV{"BASE"} } s{url\(\s*/(?!/)}{url($base}g' "{}"
           else
             echo "BASE is '/', skipping rewrite."
           fi

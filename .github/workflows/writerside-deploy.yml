@@ -121,36 +121,62 @@ jobs:
             echo "index.html already present in dir/ (from Writerside group build).";
           fi
 
-      - name: Rewrite root-relative URLs to GitHub Pages project path
+      - name: Rewrite URLs for GitHub Pages (idempotent + starter pages)
         shell: bash
         run: |
           set -euo pipefail
           BASE="/${GITHUB_REPOSITORY#*/}/"
-          echo "Rewriting root-relative URLs to use base: $BASE"
-          # Only rewrite if base is not just "/"
+          echo "Rewriting URLs to use base: $BASE"
           if [ "$BASE" != "/" ]; then
             export BASE
-            # 1) HTML/JS attribute values: href="/..., src="/..., content="/..." (preserve path after the leading slash)
-            find dir -type f \( -name "*.html" -o -name "*.js" \) -print0 | xargs -0 -I{} perl -0777 -i -pe 'BEGIN{ $base=$ENV{"BASE"} } s{\b(href|src|content)="(/(?!/)[^"]*)"}{$1="$base$2"}g' "{}"
-            
-            # 2) HTML <base href="/"> tag
-            find dir -type f -name "*.html" -print0 | xargs -0 -I{} perl -0777 -i -pe 'BEGIN{ $base=$ENV{"BASE"} } s{<base\s+href="/(?!/)}{<base href="$base"}gi' "{}"
 
-            # 3) JS and JSON: absolute URLs inside string literals starting with "/"
-            find dir -type f \( -name "*.js" -o -name "*.json" \) -print0 | xargs -0 -I{} perl -0777 -i -pe 'BEGIN{ $base=$ENV{"BASE"} } s{(["\x27`])/(?!/)}{$1 . $base}ge' "{}"
+            # 1) HTML attributes href/src/content that start with "/" and are NOT already prefixed with BASE
+            find dir -type f -name "*.html" -print0 | xargs -0 -I{} perl -0777 -i -pe '
+              BEGIN{ $b=$ENV{BASE} }
+              s{\b(href|src|content)="(/[^\"]*)"}{
+                my ($a,$p)=($1,$2);
+                $p = ($p =~ /^\Q$b\E/) ? $p : ($p =~ s{^/}{$b}r);
+                qq{$a="$p"}
+              }ge
+            ' "{}"
 
-            # 4) CSS: url(/...)
-            find dir -type f -name "*.css" -print0 | xargs -0 -I{} perl -0777 -i -pe 'BEGIN{ $base=$ENV{"BASE"} } s{url\(\s*/(?!/)}{url($base}g' "{}"
+            # 2) <base href="/"> -> <base href="$BASE">
+            find dir -type f -name "*.html" -print0 | xargs -0 -I{} perl -0777 -i -pe 'BEGIN{ $b=$ENV{BASE} } s{<base\s+href="/(?!/)}{<base href="$b"}gi' "{}"
 
-            # 5) Generic safeguard: prefix BASE before known instance roots anywhere in HTML/JS/JSON text, if not already prefixed
-            find dir -type f \( -name "*.html" -o -name "*.js" -o -name "*.json" \) -print0 | xargs -0 -I{} perl -0777 -i -pe 'BEGIN{ $base=$ENV{"BASE"} } s{(?<!\Q$base\E)/(hi|engineering|estimating|innergy|project-management)\b}{$base$1}g' "{}"
+            # 3) JS/JSON string literals starting with "/" and NOT already prefixed with BASE
+            find dir -type f \( -name "*.js" -o -name "*.json" -o -name "*.html" \) -print0 | xargs -0 -I{} perl -0777 -i -pe '
+              BEGIN{ $b=$ENV{BASE} }
+              s{(["\x27`])(/[^"\x27`)]*)}{
+                my ($q,$p)=($1,$2);
+                my $np = ($p =~ /^\Q$b\E/) ? $p : ($p =~ s{^/}{$b}r);
+                $q.$np
+              }ge
+            ' "{}"
 
-            # 6) Normalize accidental double slashes after prefixing (e.g., /repo//engineering -> /repo/engineering)
-            find dir -type f \( -name "*.html" -o -name "*.js" -o -name "*.css" -o -name "*.json" \) -print0 | xargs -0 -I{} perl -0777 -i -pe 'BEGIN{ $base=$ENV{"BASE"} } s{\Q$base\E//}{$base}g' "{}"
+            # 4) CSS url(/...) -> url($BASE...) if not already prefixed
+            find dir -type f -name "*.css" -print0 | xargs -0 -I{} perl -0777 -i -pe '
+              BEGIN{ $b=$ENV{BASE} }
+              s{url\(\s*(/[^)\s]+)\s*\)}{
+                my $p=$1; my $np = ($p =~ /^\Q$b\E/) ? $p : ($p =~ s{^/}{$b}r);
+                "url($np)"
+              }ge
+            ' "{}"
 
-            # 7) Ensure trailing slash for links pointing to instance root directories in any context so index.html is served
-            # Avoid shell-quoting issues by not matching single quotes inside the Perl pattern
-            find dir -type f \( -name "*.html" -o -name "*.js" -o -name "*.json" \) -print0 | xargs -0 -I{} perl -0777 -i -pe 'BEGIN{ $base=$ENV{"BASE"} } s{(\Q$base\E(?:hi|engineering|estimating|innergy|project-management))(?!/)(?=(?:["\)`\s#?]|$))}{$1/}g' "{}"
+            # 5) Normalize accidental double slashes after BASE
+            find dir -type f \( -name "*.html" -o -name "*.js" -o -name "*.css" -o -name "*.json" \) -print0 | xargs -0 -I{} perl -0777 -i -pe 'BEGIN{ $b=$ENV{BASE} } s{\Q$b\E//}{$b}g' "{}"
+
+            # 6) Expand instance root links to starter page slugs (avoid if already present)
+            find dir -type f \( -name "*.html" -o -name "*.js" -o -name "*.json" \) -print0 | xargs -0 -I{} perl -0777 -i -pe '
+              BEGIN{ $b=$ENV{BASE}; %m=(
+                hi=>"default-topic",
+                engineering=>"engineering",
+                estimating=>"estimating",
+                innergy=>"innergy",
+                "project-management"=>"project-management"
+              ); }
+              s{(\Q$b\E)(hi|engineering|estimating|innergy|project-management)(?!/(?:default-topic|engineering|estimating|innergy|project-management))(?=(?:["\x27\)`\s#?]|/\s*["\x27\)`\s#?]|$))}{$1.$2."/".$m{$2}}eg
+            ' "{}"
+
           else
             echo "BASE is '/', skipping rewrite."
           fi

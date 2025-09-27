@@ -131,7 +131,8 @@ jobs:
           if [ "$BASE" != "/" ]; then
             export BASE
             # HTML and JS attribute values: href="/..., src="/..., content="/..."
-            find dir -type f \( -name "*.html" -o -name "*.js" \) -print0 | xargs -0 -I{} perl -0777 -i -pe 'BEGIN{ $base=$ENV{"BASE"} } s{\b(href|src|content)="/(?!/)}{$1="$base"}g' "{}"
+            # Preserve the original path after the leading slash while prefixing BASE
+            find dir -type f \( -name "*.html" -o -name "*.js" \) -print0 | xargs -0 -I{} perl -0777 -i -pe 'BEGIN{ $base=$ENV{"BASE"} } s{\b(href|src|content)="(/(?!/)[^"]*)"}{$1="$base$2"}g' "{}"
             # HTML <base href="/"> tag
             find dir -type f -name "*.html" -print0 | xargs -0 -I{} perl -0777 -i -pe 'BEGIN{ $base=$ENV{"BASE"} } s{<base\s+href="/(?!/)}{<base href="$base"}gi' "{}"
             # JS: absolute URLs inside strings like fetch("/api"), location.assign('/path'), etc.

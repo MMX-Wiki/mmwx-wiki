@@ -60,9 +60,22 @@ jobs:
         run: |
           shopt -s nullglob
           mkdir -p dir
-          for z in artifacts/*.zip; do
-            unzip -O UTF-8 -qq "$z" -d dir
+          # Find ZIPs whether they were saved under artifacts/ or flattened to the current dir
+          zips=(artifacts/*.zip *.zip)
+          found=()
+          for z in "${zips[@]}"; do
+            if [ -f "$z" ]; then
+              found+=("$z")
+            fi
           done
+          if [ ${#found[@]} -eq 0 ]; then
+            echo "No ZIP artifacts found in either artifacts/*.zip or *.zip"
+          else
+            echo "Unzipping the following artifacts:" "${found[@]}"
+            for z in "${found[@]}"; do
+              unzip -O UTF-8 -oq "$z" -d dir
+            done
+          fi
 
       - name: Flatten group output into dir if nested
         shell: bash

@@ -2,9 +2,9 @@
 <!DOCTYPE instance-profile
         SYSTEM "https://resources.jetbrains.com/writerside/1.0/product-profile.dtd">
 
-<instance-profile id="hi"
-                 name="Help Instance"
-                 start-page="Default-topic.md">
+<instance-profile id="mwh"
+                 name="MMWX Wiki Home"
+                 start-page="mmwx-wiki-home.md">
 
-    <toc-element topic="Default-topic.md"/>
+    <toc-element topic="mmwx-wiki-home.md"/>
 </instance-profile>

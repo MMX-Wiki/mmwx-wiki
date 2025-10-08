@@ -1,3 +1,3 @@
-# About Innergy
+# Innergy Home
 
 Start typing here...

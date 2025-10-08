@@ -7,4 +7,8 @@
                  start-page="engineering.md">
 
     <toc-element topic="engineering.md"/>
+    <toc-element toc-title="AutoCAD Commands">
+        <toc-element topic="How-to.md"/>
+    </toc-element>
+    <toc-element toc-title="Microvellum Commands"/>
 </instance-profile>

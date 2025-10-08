@@ -4,11 +4,22 @@
 
 <instance-profile id="eng"
                  name="Engineering"
-                 start-page="engineering.md">
+                 start-page="engineering-home.md">
 
-    <toc-element topic="engineering.md"/>
+    <toc-element topic="engineering-home.md"/>
     <toc-element toc-title="AutoCAD Commands">
         <toc-element topic="How-to.md"/>
     </toc-element>
     <toc-element toc-title="Microvellum Commands"/>
+    <toc-element toc-title="Drafting Work Orders">
+        <toc-element topic="Initial-Submittal.md"/>
+        <toc-element topic="Pm-reviewed-needs-revisions.md"/>
+        <toc-element topic="Redlines-Returned-Needs-Revisions.md"/>
+        <toc-element topic="Approved-Needs-Revisions.md"/>
+    </toc-element>
+    <toc-element toc-title="Engineering Work Orders">
+        <toc-element topic="Ready-For-Engineering.md"/>
+        <toc-element topic="Review.md"/>
+        <toc-element topic="Ready-For-Processing.md"/>
+    </toc-element>
 </instance-profile>

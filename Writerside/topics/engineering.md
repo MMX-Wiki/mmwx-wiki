@@ -1,3 +1,0 @@
-# About Engineering
-
-Start typing here...

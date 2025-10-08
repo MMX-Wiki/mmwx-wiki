@@ -4,7 +4,7 @@
 
 <instance-profile id="pm"
                  name="Project Management"
-                 start-page="project-management.md">
+                 start-page="project-management-home.md">
 
-    <toc-element topic="project-management.md"/>
+    <toc-element topic="project-management-home.md"/>
 </instance-profile>

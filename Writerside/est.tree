@@ -4,7 +4,7 @@
 
 <instance-profile id="est"
                  name="Estimating"
-                 start-page="estimating.md">
+                 start-page="estimating-home.md">
 
-    <toc-element topic="estimating.md"/>
+    <toc-element topic="estimating-home.md"/>
 </instance-profile>

@@ -27,5 +27,10 @@
             <noindex-content>true</noindex-content>
         </variables>
     </build-profile>
-
+    <variables>
+        <algolia-id>MN0LWCPJPD</algolia-id>
+        <algolia-index>index_name</algolia-index>
+        <algolia-api-key>3a8abcdbbda7f6958e8b7a6b6f5464c5</algolia-api-key>
+        <algolia-show-logo>true</algolia-show-logo>
+    </variables>
 </buildprofiles>

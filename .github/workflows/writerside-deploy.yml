@@ -29,7 +29,8 @@ jobs:
       - name: Build group using Writerside Docker builder
         uses: JetBrains/writerside-github-action@v4
         with:
-          instance: 'Writerside/cfg/build-groups.xml#all-docs'
+          instance: 'Writerside/all-docs'
+          is-group: true
           docker-version: ${{ env.DOCKER_VERSION }}
 
       - name: Check artifacts directory

@@ -4,10 +4,10 @@
         xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/build-groups.xsd"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <build-group name="all-docs">
-        <instance instance-id="hi" alias="MMWX Wiki Home" path="/mwh"/>
-        <instance instance-id="eng" alias="Engineering" path="/engineering-home"/>
-        <instance instance-id="est" alias="Estimating" path="/estimating-home"/>
-        <instance instance-id="i" alias="Innergy" path="/innergy-home"/>
-        <instance instance-id="pm" alias="Project Management" path="/project-management-home"/>
+        <instance instance-id="mwh" alias="MMWX Wiki Home" path="/mwh"/>
+        <instance instance-id="eng" alias="Engineering" path="/eng"/>
+        <instance instance-id="est" alias="Estimating" path="/est"/>
+        <instance instance-id="i" alias="Innergy" path="/i"/>
+        <instance instance-id="pm" alias="Project Management" path="/pm"/>
     </build-group>
 </build-groups>

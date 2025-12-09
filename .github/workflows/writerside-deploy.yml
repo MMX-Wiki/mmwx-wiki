@@ -146,13 +146,13 @@ jobs:
             # 6) Expand instance root links to starter page slugs (avoid if already present)
             find dir -type f \( -name "*.html" -o -name "*.js" -o -name "*.json" \) -print0 | xargs -0 -I{} perl -0777 -i -pe '
               BEGIN{ $b=$ENV{BASE}; %m=(
-                hi=>"default-topic",
-                engineering=>"engineering",
-                estimating=>"estimating",
-                innergy=>"innergy",
-                "project-management"=>"project-management"
+                mwh=>"mmwx-wiki-home",
+                eng=>"engineering-home",
+                est=>"estimating-home",
+                i=>"innergy-home",
+                pm=>"project-management-home"
               ); }
-              s{(\Q$b\E)(hi|engineering|estimating|innergy|project-management)(?!/(?:default-topic|engineering|estimating|innergy|project-management))(?=(?:["\x27\)`\s#?]|/\s*["\x27\)`\s#?]|$))}{$1.$2."/".$m{$2}}eg
+              s{(\Q$b\E)(mwh|eng|est|i|pm)(?!/(?:mmwx-wiki-home|engineering-home|estimating-home|innergy-home|project-management-home))(?=(?:["\x27\)`\s#?]|/\s*["\x27\)`\s#?]|$))}{$1.$2."/".$m{$2}}eg
             ' "{}"
 
           else
@@ -163,7 +163,7 @@ jobs:
         shell: bash
         run: |
           echo "Listing top-level of dir/:"; ls -la dir || true
-          echo "Listing instance directories:"; for d in hi engineering estimating innergy project-management; do if [ -d "dir/$d" ]; then echo "== $d =="; ls -la "dir/$d" | sed 's/^/    /'; fi; done
+          echo "Listing instance directories:"; for d in mwh eng est i pm; do if [ -d "dir/$d" ]; then echo "== $d =="; ls -la "dir/$d" | sed 's/^/    /'; fi; done
           echo "Index files found:"; find dir -maxdepth 2 -type f -name index.html -print | sed 's/^/  /'
 
       - name: Setup GitHub Pages

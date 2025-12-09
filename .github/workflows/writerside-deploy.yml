@@ -31,7 +31,7 @@ jobs:
         with:
           instance: 'Writerside/writerside.cfg'
           is-group: true
-          docker-version: ${{ env.DOCKER_VERSION }}
+          # docker-version: ${{ env.DOCKER_VERSION }}
 
       - name: Check artifacts directory
         run: ls -R artifacts

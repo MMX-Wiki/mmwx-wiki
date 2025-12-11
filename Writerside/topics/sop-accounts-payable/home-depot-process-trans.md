@@ -1,0 +1,19 @@
+# Home Depot - Process Trans.
+
+in Quickbooks: -> gray bar at the top -> Banking -> Use register -> Home Depot or Cardmember Services (Chase) -> OK
+
+Once in the credit card register, skip over the deposits (credits). Take note of the last 4 or 5 transactions. Note their dates & amounts. You will need this information for when you are on the Home Depot site. You need the dates to know where to start in HD and the amounts so that you do not enter them again.
+
+Home Depot: Login online: See the login info in Master passwords list:
+
+The easiest way to find all of the information in one place without clicking into multiple areas is to go to the aging seciont of HD. Depeding on how far behind this is, you may need to click into current invoices & 1-29 days aging or 30-59 days aging: Below is the main page when you login. It has the aging selections as shown below.
+
+In this case, the dates go back to 9/10/24 - which is some what recent. Start in the current invoices. Once you click on the underlined $1,810.57, you will see multiple transactions. It is usually pretty clear where QB's stops and which transactions will need to be entered into QB's
+
+Back in QB's, -> gray bar at the top -> Banking -> Enter credit card charges -> Batch Transactions
+
+In Home Depot: the below example below is where to start entering transactions eliminating the transactions shown above
+
+In the example below you will see several things: 1. The blue scratched out tranasctions that were already in QB's 2. The transactions highlighted in yellow. They will need to be entered into QB's (as shown above) 3. You will see the card holders name associated with the purchase. If there is an issue in identifying the purpose of the purchase you go about it two different ways. a) Most of the guys will put the Home Depot receipts in the credit card basket. Check here first to see if they put additional information on it b) You will need to locate the purchaser if cannot find the receipt in the box. If this happens, see c) c) Go ahead and enter the transaction in QB's. However, you will code the GL Account as "Research Transactions" instead of shop or materials, etc. This will allow you to move on and research it later since you put it in the research transactions bucket - there is a process to catch up with this later. 4. The PO#'s on the example below give you an indicator if it is shop or job specific related. a) If it shop, enter the transaction as shop and move to the next transaction. b) If the transaction is project/job related, you will enter the transaction into QB's, however you will need to open Innergy to enter it in as an expense. Please see tab titled entering expenses into Innergy manually. c) Once the expense has been entered into Innergy, make a note on the memo line in QB's that it has been entered into Innergy with your initials. 5. Make sure to enter any credits shown, code them to research transactions until we figure out how to add them as credits in Innergy. 6. Make sure to enter into the following format: a) No PO#: this means Ken was not aware of the transaction to enter a PO# in Innergy: b) Name of the purchaser: this serves as a check in the system since the HD does not connect to QB's providing that information c) Include the invoice number from the transaction d) The second PO mentioned on the memo line will capture the PO shown on the Home Depot invoice so that we know the intention of the purchase. If it is shop, project materials, or a part to fix equipment. e) Make sure to put entered into Innergy on the memo line if it is materials for a project/job.
+
+Make sure to double check the account. If it goes into the wrong account, you will need to go the wrong accounts register in QB's and individually move every single transaction to the correct account. If you do this with a card like Chase (Cardmember Services) it could take hours

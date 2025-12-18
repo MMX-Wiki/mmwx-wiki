@@ -9,5 +9,6 @@
         <instance instance-id="est" alias="Estimating" path="/est"/>
         <instance instance-id="i" alias="Innergy" path="/i"/>
         <instance instance-id="pm" alias="Project Management" path="/pm"/>
+        <instance instance-id="admin" alias="Administration" path="/admin"/>
     </build-group>
 </build-groups>

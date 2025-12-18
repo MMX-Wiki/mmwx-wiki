@@ -2,6 +2,11 @@
 <!DOCTYPE buildprofiles SYSTEM "https://resources.jetbrains.com/writerside/1.0/build-profiles.dtd">
 <buildprofiles xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/build-profiles.xsd"
                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <build-profile instance="admin">
+        <variables>
+            <noindex-content>true</noindex-content>
+        </variables>
+    </build-profile>
     <build-profile instance="eng">
         <variables>
             <noindex-content>false</noindex-content>
@@ -33,9 +38,4 @@
         <algolia-api-key>3a8abcdbbda7f6958e8b7a6b6f5464c5</algolia-api-key>
         <algolia-show-logo>true</algolia-show-logo>
     </variables>
-    <build-profile instance="admin">
-        <variables>
-            <noindex-content>true</noindex-content>
-        </variables>
-    </build-profile>
 </buildprofiles>

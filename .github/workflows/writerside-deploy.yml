@@ -151,6 +151,7 @@ jobs:
                 est=>"estimating-home",
                 i=>"innergy-home",
                 pm=>"project-management-home"
+                admin=>"administration-home"
               ); }
               s{(\Q$b\E)(mwh|eng|est|i|pm)(?!/(?:mmwx-wiki-home|engineering-home|estimating-home|innergy-home|project-management-home))(?=(?:["\x27\)`\s#?]|/\s*["\x27\)`\s#?]|$))}{$1.$2."/".$m{$2}}eg
             ' "{}"

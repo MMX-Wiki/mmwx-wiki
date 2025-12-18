@@ -33,4 +33,9 @@
         <algolia-api-key>3a8abcdbbda7f6958e8b7a6b6f5464c5</algolia-api-key>
         <algolia-show-logo>true</algolia-show-logo>
     </variables>
+    <build-profile instance="admin">
+        <variables>
+            <noindex-content>true</noindex-content>
+        </variables>
+    </build-profile>
 </buildprofiles>

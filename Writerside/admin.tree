@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE instance-profile
+        SYSTEM "https://resources.jetbrains.com/writerside/1.0/product-profile.dtd">
+
+<instance-profile id="admin"
+                 name="Adminstration"
+                 start-page="adminstration.md">
+
+    <toc-element topic="adminstration.md"/>
+    <toc-element toc-title="Accounts Receivable"/>
+    <toc-element toc-title="Acconts Payable"/>
+    <toc-element toc-title="Payroll"/>
+    <toc-element toc-title="Admin Other"/>
+</instance-profile>

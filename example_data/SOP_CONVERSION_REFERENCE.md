@@ -59,7 +59,7 @@ Use this guide when creating topics in Writerside. Create the topic in the IDE, 
 
 All generated files are in:
 ```
-C:\Users\dkane\Projects\mmwx-wiki\Writerside\topics\
+.\mmwx-wiki\Writerside\topics\
 ├── sop-accountant-monthly-process\
 │   ├── dates-to-know.md
 │   ├── step-1-daily-weekly.md

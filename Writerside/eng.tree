@@ -23,4 +23,10 @@
         <toc-element topic="Review.md"/>
         <toc-element topic="Ready-For-Processing.md"/>
     </toc-element>
+    <toc-element toc-title="Drawing SOP's">
+        <toc-element topic="Basic-Elevations.md"/>
+        <toc-element topic="Sink-Cabinets.md"/>
+        <toc-element topic="Die-Walls.md"/>
+        <toc-element topic="Wall-Paneling.md"/>
+    </toc-element>
 </instance-profile>

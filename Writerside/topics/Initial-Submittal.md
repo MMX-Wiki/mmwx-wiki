@@ -4,7 +4,7 @@
 
 ![Image 1 - Drafting Work Order Screen](drafting_wo_screen.png)
 
-1. Go to Drafting/Drafting - Backlog and open the work order at the top of the list
+1. Go to Drafting/Drafting Backlog and open the work order at the top of the list
 2. Clock in the work order using either "Start Activity" or "Switch Activity" at the bottom right-hand corner of the screen.[Image 1, Mark 1]
 3. Using the edit pencil next to the blue "Workflow Step" field in the top-right[Image 1, Mark 2], change the WO step to being drafted.
 4. Click the dark blue "Edit" button in the bottom left corner [Image 1, Mark 3]
@@ -28,7 +28,11 @@
 6. Expand the dropdown for that location.
 7. In your plan view windows in your view, open the plan, elevation, and any other related views.
 8. In your budget window, set the view dropdown to "Engineering - Product by Location"
-### Create Walls and Place Products {collapsible="true"}
+
+# Working with Locations in Microvellum
+
+## Products and Walls Imported From Conduit <!-- TODO: Detail steps for working with a location imported from Conduit -->
+## Create Walls and Place Products {collapsible="true"}
 9. Create your walls in model space.<!-- TODO: Create "Creating Walls in Model Space" page and change this to a link to that page -->
 10. Using the budget and arch views in Takeoff, place the products in the correct locations.
 11. Before drawing your 2D elevations and sections verify:
@@ -45,7 +49,7 @@
     Countertops
     - Splashes are accounted for where needed.
     - Finished ends are turned on where needed.
-    - Brackets if present, are of the correct type.
+    - Brackets if present, are of the correct type, and in the correct location.
 
     Appliances
     - Appliances are not be hand drawn.
@@ -68,7 +72,7 @@
 [//]: # (## Shop Drawing Acceptance Guidelines {id="shop_drawing_acceptance_guidelines"})
 
 
-## Publishing Shops to Inergy {id="publishing_shops"}
+# Publishing Shops to Innergy {id="publishing_shops"}
 
 ### Publish Work Order {collapsible="true"}
 ### Upload Published Location to Innergy {collapsible="true"}
